@@ -30,3 +30,4 @@ endif()
 # Подпроекты
 add_subdirectory(client_server)
 add_subdirectory(poll_connections)
+add_subdirectory(async_connections)
