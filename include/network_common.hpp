@@ -22,7 +22,7 @@
 // Определяем нужные типы
 using ssize_t = int;     // В Windows этого типа нет
 using socket_t = SOCKET; // В Windows тип сокета это обычный дескриптор, но размером с указатель
-using netsize_t = int;   // В Windows функции send и receive принимают тип int 
+using netsize_t = int;   // В Windows функции send и recv принимают тип int 
 
 // Обертка для вызова closesocket, предназначенного для закрытия сокета
 // Добавлен ради кроссплатформенности
@@ -51,9 +51,13 @@ do if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) \
 #include <unistd.h>
 #define INVALID_SOCKET -1 // В Unix этого определения для ошибки создания сокета нет, задаем
 
+// В Unix функции переворота 64-битного целого определены как препроцессорные определения
+#define ntohll be64toh
+#define htonll htobe64
+
 // Определяем нужные типы
 using socket_t = int;     // Тип для сокета в Unix это обобщенный файловый дескриптор
-using netsize_t = size_t; // Функции send и receive в Unix принимают тип size_t
+using netsize_t = size_t; // Функции send и recv в Unix принимают тип size_t
 
 // В Unix подгружать ничего не нужно, поэтому этот вызов пустой
 inline void Startup() {}
